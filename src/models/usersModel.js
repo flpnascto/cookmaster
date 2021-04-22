@@ -32,8 +32,14 @@ const findAll = async () => conn()
 const findByEmail = async (email) => conn()
   .then((db) => db.collection(collectionName).findOne({ email }));
 
+const findByEmailAndPassword = async (email, password) => conn()
+  .then((db) => db.collection(collectionName).findOne({
+    $and: [{ email }, { password }],
+  }));
+
 module.exports = {
   create,
   findAll,
   findByEmail,
+  findByEmailAndPassword,
 };

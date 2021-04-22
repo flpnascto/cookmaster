@@ -3,6 +3,8 @@ const Users = require('../models/usersModel');
 const erroMessage = {
   invalid: 'Invalid entries. Try again.',
   registredEmail: 'Email already registered',
+  requiredFields: 'All fields must be filled',
+  invalidLogin: 'Incorrect username or password',
 };
 
 const isRequired = (value) => {
@@ -61,6 +63,19 @@ const create = async (name, email, password, role = 'user') => {
   return { code: 201, newUser };
 };
 
+const findByEmailAndPassword = async (email, password) => {
+  if (!isRequired(email) || !isRequired(password)) {
+    return { code: 401, message: erroMessage.requiredFields };
+  }
+
+  const user = await Users.findByEmailAndPassword(email, password);
+  console.log('service', user);
+
+  if (user === null) return { code: 401, message: erroMessage.invalidLogin };
+  return { code: 200, user };
+};
+
 module.exports = {
   create,
+  findByEmailAndPassword,
 };
