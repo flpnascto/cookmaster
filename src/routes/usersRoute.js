@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const Users = require('../controllers/usersController');
 
 router.route('/')
   .get()
-  .post()
+  .post(Users.create)
   .put()
   .delete();
 
