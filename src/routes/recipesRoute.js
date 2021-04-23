@@ -3,7 +3,7 @@ const Auth = require('../controllers/authController');
 const Recipes = require('../controllers/recipesController');
 
 router.route('/')
-  .get()
+  .get(Recipes.findAll)
   .post(Auth, Recipes.create)
   .put()
   .delete();

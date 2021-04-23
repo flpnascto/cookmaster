@@ -16,6 +16,13 @@ const create = async (name, ingredients, preparation, userId) => {
   return { code: 201, newRecipe };
 };
 
+const findAll = async () => {
+  const recipes = await Recipes.findAll();
+
+  return { code: 200, recipes };
+};
+
 module.exports = {
   create,
+  findAll,
 };

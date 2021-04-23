@@ -10,6 +10,12 @@ const create = async (req, res) => {
   res.status(code).json({ recipe: newRecipe });
 };
 
+const findAll = async (req, res) => {
+  const { code, recipes } = await Recipes.findAll();
+  res.status(code).json(recipes);
+};
+
 module.exports = {
   create,
+  findAll,
 };
