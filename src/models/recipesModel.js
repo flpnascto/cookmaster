@@ -17,9 +17,18 @@ const conn = require('../database');
 
 const collectionName = 'recipes';
 
+const create = async (name, ingredients, preparation, userId) => conn()
+  .then((db) => db.collection(collectionName).insertOne({
+    name,
+    ingredients,
+    preparation,
+    userId,
+  }));
+
 const findAll = async () => conn()
   .then((db) => db.collection(collectionName).find().toArray());
 
 module.exports = {
+  create,
   findAll,
 };
