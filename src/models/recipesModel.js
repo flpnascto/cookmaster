@@ -1,4 +1,5 @@
 // const { ObjectId } = require('mongodb');
+const { ObjectId } = require('bson');
 const conn = require('../database');
 
 /* {
@@ -28,7 +29,11 @@ const create = async (name, ingredients, preparation, userId) => conn()
 const findAll = async () => conn()
   .then((db) => db.collection(collectionName).find().toArray());
 
+const findById = async (id) => conn()
+  .then((db) => db.collection(collectionName).findOne({ _id: ObjectId(id) }));
+
 module.exports = {
   create,
   findAll,
+  findById,
 };

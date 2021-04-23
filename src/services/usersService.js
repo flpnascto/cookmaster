@@ -69,7 +69,6 @@ const findByEmailAndPassword = async (email, password) => {
   }
 
   const user = await Users.findByEmailAndPassword(email, password);
-  console.log('service', user);
 
   if (user === null) return { code: 401, message: erroMessage.invalidLogin };
   return { code: 200, user };

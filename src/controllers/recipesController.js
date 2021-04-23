@@ -15,7 +15,15 @@ const findAll = async (req, res) => {
   res.status(code).json(recipes);
 };
 
+const findById = async (req, res) => {
+  const { id } = req.params;
+  const { code, recipe, message } = await Recipes.findById(id);
+  if (message !== undefined) return res.status(code).json({ message });
+  res.status(code).json(recipe);
+};
+
 module.exports = {
   create,
   findAll,
+  findById,
 };

@@ -1,5 +1,7 @@
+const { ObjectId } = require('bson');
 const Recipes = require('../models/recipesModel');
 const validateRecipe = require('./validations/validateRecipe');
+const errorMessage = require('./validations/errorMessage');
 
 const create = async (name, ingredients, preparation, userId) => {
   const { code, message } = validateRecipe(name, ingredients, preparation);
@@ -22,7 +24,18 @@ const findAll = async () => {
   return { code: 200, recipes };
 };
 
+const findById = async (id) => {
+  if (!ObjectId.isValid(id)) return { code: 404, message: errorMessage.recipeInvalid };
+
+  const recipe = await Recipes.findById(id);
+
+  if (recipe === null) return { code: 404, message: errorMessage.recipeInvalid };
+
+  return { code: 200, recipe };
+};
+
 module.exports = {
   create,
   findAll,
+  findById,
 };
