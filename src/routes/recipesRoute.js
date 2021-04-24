@@ -11,7 +11,7 @@ router.route('/')
 router.route('/:id')
   .get(Recipes.findById)
   .post()
-  .put()
+  .put(Auth, Recipes.update)
   .delete();
 
 router.route('/:id/image')

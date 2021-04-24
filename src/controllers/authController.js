@@ -5,7 +5,7 @@ const SECRET = 'secretkey';
 
 const authController = async (req, res, next) => {
   const token = req.headers.authorization;
-  if (!token) return res.status(401).json({ message: 'Sem token' });
+  if (!token) return res.status(401).json({ message: 'missing auth token' });
 
   const decode = jwt.decode(token);
   if (decode === null) return res.status(401).json({ message: 'jwt malformed' });

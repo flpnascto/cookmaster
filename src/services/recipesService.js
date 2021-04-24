@@ -34,8 +34,18 @@ const findById = async (id) => {
   return { code: 200, recipe };
 };
 
+const update = async (id, name, ingredients, preparation) => {
+  if (!ObjectId.isValid(id)) return { code: 404, message: errorMessage.recipeInvalid };
+  const { code, message } = validateRecipe(name, ingredients, preparation);
+  if (message) return { code, message };
+  const { matchedCount } = await Recipes.update(id, name, ingredients, preparation);
+  if (matchedCount !== 1) return { code: 404, message: errorMessage.recipeInvalid };
+  return findById(id);
+};
+
 module.exports = {
   create,
   findAll,
   findById,
+  update,
 };

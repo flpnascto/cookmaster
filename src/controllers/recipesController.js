@@ -22,8 +22,17 @@ const findById = async (req, res) => {
   res.status(code).json(recipe);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const { code, recipe, message } = await Recipes.update(id, name, ingredients, preparation);
+  if (message !== undefined) return res.status(code).json({ message });
+  res.status(code).json(recipe);
+};
+
 module.exports = {
   create,
   findAll,
   findById,
+  update,
 };
