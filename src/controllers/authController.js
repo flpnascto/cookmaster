@@ -7,15 +7,17 @@ const authController = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) return res.status(401).json({ message: 'missing auth token' });
 
-  const decode = jwt.decode(token);
-  if (decode === null) return res.status(401).json({ message: 'jwt malformed' });
+  try {
+    const payload = jwt.verify(token, SECRET);
+    const { _id } = await Users.findByEmail(payload.username);
 
-  const payload = jwt.verify(token, SECRET);
+    // from: https://reactgo.com/express-pass-variables-middleware/
+    res.locals.id = _id;
+    res.locals.isAdmin = payload.admin;
+  } catch (error) {
+    return res.status(401).json({ message: error.message });
+  }
 
-  const { _id } = await Users.findByEmail(payload.username);
-
-  // from: https://reactgo.com/express-pass-variables-middleware/
-  res.locals.id = _id;
   next();
 };
 

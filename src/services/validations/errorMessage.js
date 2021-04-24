@@ -5,6 +5,7 @@ const erroMessage = {
   invalidLogin: 'Incorrect username or password',
   jwtInvalid: 'jwt malformed',
   recipeInvalid: 'recipe not found',
+  notAllowed: 'User without permission',
 };
 
 module.exports = erroMessage;

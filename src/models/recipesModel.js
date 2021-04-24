@@ -44,9 +44,13 @@ const update = async (id, name, ingredients, preparation) => conn()
     },
   ));
 
+const remove = async (id) => conn()
+  .then((db) => db.collection(collectionName).deleteOne({ _id: ObjectId(id) }));
+
 module.exports = {
   create,
   findAll,
   findById,
   update,
+  remove,
 };

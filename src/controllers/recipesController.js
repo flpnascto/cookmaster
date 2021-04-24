@@ -30,9 +30,21 @@ const update = async (req, res) => {
   res.status(code).json(recipe);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+
+  // from: https://reactgo.com/express-pass-variables-middleware/
+  const userId = res.locals.id;
+  const { isAdmin } = res.locals;
+  const { code, message } = await Recipes.remove(id, userId, isAdmin);
+  if (message !== undefined) return res.status(code).json({ message });
+  res.status(code).send();
+};
+
 module.exports = {
   create,
   findAll,
   findById,
   update,
+  remove,
 };

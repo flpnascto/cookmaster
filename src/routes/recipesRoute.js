@@ -12,7 +12,7 @@ router.route('/:id')
   .get(Recipes.findById)
   .post()
   .put(Auth, Recipes.update)
-  .delete();
+  .delete(Auth, Recipes.remove);
 
 router.route('/:id/image')
   .get()

@@ -43,9 +43,22 @@ const update = async (id, name, ingredients, preparation) => {
   return findById(id);
 };
 
+const remove = async (id, loggedUserId, isAdmin) => {
+  const { code, recipe, message } = await findById(id);
+
+  if (message !== undefined) return { code, message };
+  if (!loggedUserId.equals(recipe.userId) && !isAdmin) {
+    return { code: 403, message: errorMessage.notAllowed };
+  }
+
+  await Recipes.remove(id);
+  return { code: 204 };
+};
+
 module.exports = {
   create,
   findAll,
   findById,
   update,
+  remove,
 };

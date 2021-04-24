@@ -13,9 +13,12 @@ module.exports = async (req, res) => {
   const { code, user, message } = await Users.findByEmailAndPassword(email, password);
   if (message) return res.status(code).json({ message });
 
+  let admin = false;
+  if (user.role === 'admin') admin = true;
+
   const payload = {
     username: user.email,
-    admin: false,
+    admin,
   };
 
   const token = jwt.sign(payload, SECRET, jwtConfig);
