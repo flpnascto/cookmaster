@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Users = require('../controllers/usersController');
+const Auth = require('../controllers/authController');
 
 router.route('/')
   .get()
@@ -9,7 +10,7 @@ router.route('/')
 
 router.route('/admin')
   .get()
-  .post()
+  .post(Auth, Users.createAdmin)
   .put()
   .delete();
 
