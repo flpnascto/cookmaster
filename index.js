@@ -3,7 +3,7 @@ const routes = require('./src/routes');
 
 const app = express();
 app.use(express.json());
-app.use(express.static(`${__dirname}/uploads`));
+app.use('/images', express.static(`${__dirname}/uploads`));
 
 const PORT = 3000;
 
