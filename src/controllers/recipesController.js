@@ -30,6 +30,14 @@ const update = async (req, res) => {
   res.status(code).json(recipe);
 };
 
+const updateImage = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const { code, recipe, message } = await Recipes.updateImage(id, filename);
+  if (message !== undefined) return res.status(code).json({ message });
+  res.status(code).json(recipe);
+};
+
 const remove = async (req, res) => {
   const { id } = req.params;
 
@@ -46,5 +54,6 @@ module.exports = {
   findAll,
   findById,
   update,
+  updateImage,
   remove,
 };

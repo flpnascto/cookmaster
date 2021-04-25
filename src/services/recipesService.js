@@ -43,6 +43,16 @@ const update = async (id, name, ingredients, preparation) => {
   return findById(id);
 };
 
+const updateImage = async (id, filename) => {
+  if (!ObjectId.isValid(id)) return { code: 404, message: errorMessage.recipeInvalid };
+
+  const imageUrl = `localhost:3000/images/${filename}`;
+
+  const { matchedCount } = await Recipes.updateImage(id, imageUrl);
+  if (matchedCount !== 1) return { code: 404, message: errorMessage.recipeInvalid };
+  return findById(id);
+};
+
 const remove = async (id, loggedUserId, isAdmin) => {
   const { code, recipe, message } = await findById(id);
 
@@ -60,5 +70,6 @@ module.exports = {
   findAll,
   findById,
   update,
+  updateImage,
   remove,
 };

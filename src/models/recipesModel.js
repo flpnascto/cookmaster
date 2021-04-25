@@ -44,6 +44,16 @@ const update = async (id, name, ingredients, preparation) => conn()
     },
   ));
 
+const updateImage = async (id, imageUrl) => conn()
+  .then((db) => db.collection(collectionName).updateOne(
+    { _id: ObjectId(id) },
+    {
+      $set: {
+        image: imageUrl,
+      },
+    },
+  ));
+
 const remove = async (id) => conn()
   .then((db) => db.collection(collectionName).deleteOne({ _id: ObjectId(id) }));
 
@@ -52,5 +62,6 @@ module.exports = {
   findAll,
   findById,
   update,
+  updateImage,
   remove,
 };
